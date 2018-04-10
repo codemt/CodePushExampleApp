@@ -30,7 +30,7 @@ export default class App extends Component{
   } 
 
   render() {
-    const input1 = this.state.input1;
+    
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
