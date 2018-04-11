@@ -28,6 +28,13 @@ export default class App extends Component{
 			
 	  	codePush.sync({ updateDialog:true,installMode:codePush.InstallMode.IMMEDIATE});
   } 
+  onButtonPress() {
+    alert('testing codepush update');
+    codePush.sync({
+        updateDialog: true,
+        installMode: codePush.InstallMode.IMMEDIATE
+    });
+}
 
   render() {
     
