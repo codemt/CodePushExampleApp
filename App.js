@@ -6,12 +6,15 @@
 
 import React, { Component } from 'react';
 import codePush from 'react-native-code-push';
+import Analytics from 'appcenter-analytics';
+import Crashes from 'appcenter-crashes';
 import {
   Platform,
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Button
 } from 'react-native';
 let codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 const instructions = Platform.select({
@@ -22,6 +25,7 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component{
+
 
   componentDidMount()
   {
@@ -35,7 +39,31 @@ export default class App extends Component{
         installMode: codePush.InstallMode.IMMEDIATE
     });
 }
+sendEvent(){
+    Analytics.trackEvent('My Custom Event',{
+        prop1: 'Custom Property',
+        timeStamp: new Date().toISOString()
 
+    });
+
+}
+nativeCrash(){
+
+      Crashes.generateTestCrash();
+
+}
+jsCrash(){
+  this.fun1();
+}
+fun1(){
+  this.fun2();
+}
+fun2(){
+  this.fun3();
+}
+fun3(){
+  throw new Error('My Custom Exception');
+}
   render() {
     
     return (
@@ -48,6 +76,9 @@ export default class App extends Component{
                 <TouchableOpacity onPress={this.onButtonPress}>
                     <Text>Check for updates</Text>
                 </TouchableOpacity>
+                <Button title="Send Event" onPress={()=>this.sendEvent()} />
+                <Button title="Send Event" onPress={()=>this.nativeCrash()} />
+                <Button title="Send Event" onPress={()=>this.jsCrash()} />
             </View> 
       </View>
     );
